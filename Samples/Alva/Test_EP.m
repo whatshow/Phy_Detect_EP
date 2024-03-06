@@ -40,7 +40,7 @@ for idx = 1:length(SNR_range)
     SER_all = zeros(1, BER_max_try_times);
     SER_all_alva = zeros(1, BER_max_try_times);
     % Try several times to do average on all BERs to avoid fluctuation
-    for try_times = 1:1:BER_max_try_times
+    parfor try_times = 1:1:BER_max_try_times
         if debug_testData == 1
             nbits_len = tx_num*sym_bitnum;
             nbits = [1;0;1;0;1;0;1;1;0;0;1;0;1;0;1;1;1;0;0;0;1;1;0;0;0;0;1;1;0;0;1;0;0;0;0;1;0;0;1;0;1;1;0;1;1;0;0;1];
@@ -73,7 +73,7 @@ for idx = 1:length(SNR_range)
 
         [syms] = Detection_EP(sympool_real, H_real, y_real, noiseLevel/2, ep_iter_times, "Beta", ep_beta, "MinVariance", 1e-13);
         syms = [syms(1:length(syms)/2) + 1j*syms(length(syms)/2+1:end)];
-        [syms_alva] = EP(y_real,H_real,noiseLevel, 'QAM', log2(M), ep_iter_times);
+        [syms_alva] = EP_Alva(y_real,H_real,noiseLevel, 'QAM', log2(M), ep_iter_times);
         % To bits
         nbits_pred = qamdemod(syms, M,'OutputType','bit','UnitAveragePower',true);
         nbits_pred_alva = qamdemod(syms_alva, M,'OutputType','bit','UnitAveragePower',true);
@@ -94,12 +94,13 @@ for idx = 1:length(SNR_range)
 end
 
 % plot
-semilogy(SNR_range, SERs, "-ob");
+semilogy(SNR_range, SERs, "--ob", "LineWidth", 2);
 hold on;
-semilogy(SNR_range, SERs_alva, "-or");
+semilogy(SNR_range, SERs_alva, "-sr");
+hold off;
 grid on;
 xlabel("SNR(dB)");
 ylabel("SER");
-ylim([10^-4, 1]);
+ylim([min(SERs_alva), 1]);
 xlim([16, 30]);
 legend('EP-xin', 'EP-Alva');

@@ -53,7 +53,7 @@ function [syms] = Detection_EP(sympool, H, y, y_var, ep_iter_times, varargin)
     % -------------------------------------------------------------------------
     % P(x|y) = P(y|x)P(x)
     % Param Config - Every Iteration
-    px_Lambda = ones(rx_num, 1);                                % p(x) variance reciprocal
+    px_Lambda = 2*ones(rx_num, 1);                                % p(x) variance reciprocal
     px_gamma = zeros(rx_num, 1);                                % p(x) mean is gamma/Lambda
     px_Lambda_new = ones(rx_num, 1);                            % p(x) variance reciprocal (new iteration)
     px_gamma_new = zeros(rx_num, 1);                            % p(x) mean (new iteration)
@@ -79,7 +79,7 @@ function [syms] = Detection_EP(sympool, H, y, y_var, ep_iter_times, varargin)
         pyx_mean_mat = repmat(pyx_mean, 1, sympool_len);                                    % copy 'sympool_len' colums of 'pyx_mean'
         sympool_mat = repmat(sympool, rx_num, 1);                                           % sympool for all Tx antennas
         % Calculate P(x|y) for every x (For complex values, we use absolute diference)
-        pxy_pred_pdf_power = -1./pyx_var.*abs(pyx_mean_mat - sympool_mat).^2;               % e^pxy_pred_pdf_power (for all Tx and all possible symbols)
+        pxy_pred_pdf_power = -1./(2*pyx_var).*abs(pyx_mean_mat - sympool_mat).^2;               % e^pxy_pred_pdf_power (for all Tx and all possible symbols)
         pxy_pred_pdf_power = pxy_pred_pdf_power - max(pxy_pred_pdf_power, [], 2);           % subtract the maximum pdf_power on every possible selection of each row (for all Tx and all possible symbols)
         pxy_pred_pdf = exp(pxy_pred_pdf_power);                                             % PDF (for all Tx and all possible symbols)
         pxy_pred_pdf_sum = sum(pxy_pred_pdf, 2);
