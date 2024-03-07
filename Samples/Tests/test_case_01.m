@@ -27,3 +27,7 @@ syms_diff = abs(syms_xin - syms_alva);
 fprintf("Original Code: the difference is %.16f\n", sum(syms_diff));
 fprintf("New Code: (1) the difference is %.16f\n", sum(abs(syms_xin - symbols)));
 fprintf("          (2) the difference is %.16f\n", sum(abs(syms_alva - symbols)));
+
+%% save
+save(path_file, "syms_alva", "-append");
+save(path_file, "symbols", "-append");
