@@ -13,11 +13,10 @@ classdef EP < handle
         % init
         % @constellation:           the constellation, a vector
         % @beta:                    the percentage for taking values from the previous iteration
-        % @sigma2_min:              the default minimal variance
+        % @epsilon:                 the default minimal variance
         % @l:                       maximal iteration
         % @early_stop:              whether stop early
         % @early_stop_min_diff:     the elemental minimal difference in mean and variance
-        % @l_min_diff:              the elemental minimal difference for mean and variance in Bayesian estimation
         function self = EP(constellation, varargin)
             % inputs
             % inputs - constellation
@@ -94,13 +93,24 @@ classdef EP < handle
             gamma = zeros(x_num, 1);
             lamda = (1/self.es)*ones(x_num, 1);
             if self.early_stop
-                mu_pi_prev = zeros(x_num, 1);
-                sigma_pi_prev = zeros(x_num, 1);
+                lmmse_mu_prev = zeros(x_num, 1);
+                lmmse_Sigma_prev = zeros(x_num, x_num);
             end
             for iter_idx = 1:self.l
                 % linear MMSE
                 lmmse_Sigma  = inv(HtH + No*diag(lamda));       % covariance matrix
                 lmmse_mu = lmmse_Sigma*(Hty + No*gamma);        % mean vector
+                
+                % early stop
+                if self.early_stop
+                    if iter_idx > 1 && sum(abs(lmmse_mu_prev - lmmse_mu) < self.early_stop_min_diff ) == x_num && sum(abs(lmmse_Sigma_prev - lmmse_Sigma) < self.early_stop_min_diff, "all") == x_num*x_num
+                        break;
+                    end
+                    % early stop - store mean and covariance
+                    lmmse_mu_prev = lmmse_mu;
+                    lmmse_Sigma_prev = lmmse_Sigma;
+                end
+                
                 % cavity marginal
                 sigmai2 = No*diag(real(lmmse_Sigma));
                 hi2 = sigmai2./(1-sigmai2.*lamda);
@@ -121,18 +131,6 @@ classdef EP < handle
                 mu_pi_mat = repmat(mu_pi, 1, self.constellation_len);
                 sigma_pi = sum(abs(mu_pi_mat - self.constellation).^2.*pxyPdfNorm, 2);
                 sigma_pi = max(sigma_pi, self.epsilon);
-                
-                % early stop
-                if self.early_stop
-                    if iter_idx > 1
-                        if sum(abs(mu_pi - mu_pi_prev) < self.early_stop_min_diff ) > 0 || sum(abs(sigma_pi - sigma_pi_prev) < self.early_stop_min_diff ) > 0
-                            break;
-                        end
-                    end
-                    % early stop - store Bayesian estimation results
-                    mu_pi_prev = mu_pi;
-                    sigma_pi_prev = sigma_pi;
-                end
                 
                 % update
                 lamda_new = (hi2-sigma_pi)./sigma_pi./hi2;
