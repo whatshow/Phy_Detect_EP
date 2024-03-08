@@ -8,7 +8,7 @@ Also, the initial version of this code is from `Alva Kosasih`.
 Currently, we offer three options to install this tool.
 * Install through `Matlab Add-Ons`
 
-    Go to [releases](./releases) to download the file `Phy_Detect_EP.mltbx` in the latest release to install.<br>
+    Go to [releases](https://github.com/whatshow/Phy_Detect_EP/releases/) to download the file `Phy_Detect_EP.mltbx` in the latest release to install.<br>
     The class `EP` will be automatically added in Matlab. (Don't forget to restart Matlab after installation).
 * Install through `git` under another local repositiory
     * **In another local repositiory, add this module**
