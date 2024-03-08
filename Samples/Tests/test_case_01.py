@@ -8,7 +8,7 @@ from EP import EP
 project_name = "phy_detect_ep";
 path_folder = os.path.abspath(os.path.dirname(__file__)).lower();
 path_folder = path_folder[:path_folder.find(project_name)+len(project_name)];
-path_file = os.path.normpath(path_folder+"/_dist/Samples/Tests/test_case_01.mat");
+path_file = os.path.normpath(path_folder+"/_tmp/Samples/Tests/test_case_01.mat");
 
 # load matlab data
 try:

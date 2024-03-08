@@ -2,22 +2,30 @@
 This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update.
 > Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. IEEE Transactions on Communications, 62(8), 2840-2849.
 Also, the initial version of this code is from `Alva Kosasih`.
-* **In another local repositiory, add this module**
-    ```sh
-    git submodule add git@github.com:whatshow/Phy_Detect_EP.git Modules/Detect_EP
-    ```
-* **import this module**
-    * Matlab
-        ```matlab
-        addpath("Modules/Detect_EP");
+
+## How to install
+Currently, we offer three options to install this tool.
+* Install through `Matlab Add-Ons`
+    Go to [https://github.com/whatshow/Phy_Detect_EP/releases](https://github.com/whatshow/Phy_Detect_EP/releases) to download the file `Phy_Detect_EP.mltbx` in the latest release to install.
+    
+    The class `EP` will be automatically added in Matlab. (Don't forget to restart Matlab after installation).
+* Install through `git` under another local repositiory
+    * **In another local repositiory, add this module**
+        ```sh
+        git submodule add git@github.com:whatshow/Phy_Detect_EP.git Modules/Phy_Detect_EP
         ```
-    * Python
-        ```python
-        if '.' not in __name__ :
-            from Modules.Detect_EP.EP import EP
-        else:
-            from .Modules.Detect_EP.EP import EP
-        ```
+    * **import this module**
+        * Matlab
+            ```matlab
+            addpath("Modules/Phy_Detect_EP");
+            ```
+        * Python
+            ```python
+            if '.' not in __name__ :
+                from Modules.Phy_Detect_EP.EP import EP
+            else:
+                from .Modules.Phy_Detect_EP.EP import EP
+            ```
 
 ## How to use
 ## Samples

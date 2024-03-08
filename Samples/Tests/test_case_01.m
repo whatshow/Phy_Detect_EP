@@ -2,7 +2,7 @@ close all;
 clear;
 clc;
 %%
-path_folder = "./_dist/Samples/Tests/";
+path_folder = "./_tmp/Samples/Tests/";
 path_file = path_folder + "test_case_01.mat";
 % create the folder if not exist
 if ~exist(path_file, 'file')
