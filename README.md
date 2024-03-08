@@ -1,6 +1,7 @@
 # Phy_Detect_EP
 This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update.
 > Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. IEEE Transactions on Communications, 62(8), 2840-2849.
+
 Also, the initial version of this code is from `Alva Kosasih`.
 
 ## How to install
@@ -33,6 +34,7 @@ Before running any sample code, please make sure you are at the root path of thi
 * `Alva`: this is the original code from `Alva Kosasih`.
 * `Tests`
     * `Tests/test_case_01`: test the difference between the mature code from and newly proposed `EP` object (no early stop).
+    * `Tests/test_case_02`: draw the SER vs SNR between the mature code from and newly proposed `EP` object (early stop).
 
 ## Further Reading
 ### The division of two Gaussian distribution
