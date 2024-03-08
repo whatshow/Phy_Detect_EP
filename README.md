@@ -24,7 +24,7 @@ Also, the initial version of this code is from `Alva Kosasih`.
 Before running any sample code, please make sure you are at the root path of this repository. Also, Matlab codes require running `init` in the command window first to load directories.
 * `Alva`: this is the original code from `Alva Kosasih`.
 * `Tests`
-    * `Tests/test_case_01`: test the difference between the mature code from and newly proposed `EP` object.
+    * `Tests/test_case_01`: test the difference between the mature code from and newly proposed `EP` object (no early stop).
 
 ## Further Reading
 ### The division of two Gaussian distribution

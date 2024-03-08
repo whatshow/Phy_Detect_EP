@@ -8,7 +8,7 @@ EP detection
 @sigma2:                  the noise power (in the real equivalent domain)
 @num_iter:                the number of iteration for EP
 '''
-def EP_Alva(constellation, user_num, x_real,y_noise_real,H_real,sigma2,num_iter):
+def EP_Alva(constellation, user_num, y_noise_real,H_real,sigma2,num_iter):
     lamda_init = np.ones((H_real.shape[0], user_num))*2
     gamma_init = np.zeros((H_real.shape[0], user_num));
     sigma2 = np.mean(sigma2)

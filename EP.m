@@ -48,6 +48,7 @@ classdef EP < handle
             self.early_stop = inPar.Results.early_stop;
             self.early_stop_min_diff = inPar.Results.early_stop_min_diff;
         end
+        
         % detect
         % @y:           the received signal
         % @H:           the channel matrix
@@ -96,14 +97,14 @@ classdef EP < handle
                 lmmse_mu_prev = zeros(x_num, 1);
                 lmmse_Sigma_prev = zeros(x_num, x_num);
             end
-            for iter_idx = 1:self.l
+            for iter_id = 1:self.l
                 % linear MMSE
                 lmmse_Sigma  = inv(HtH + No*diag(lamda));       % covariance matrix
                 lmmse_mu = lmmse_Sigma*(Hty + No*gamma);        % mean vector
                 
                 % early stop
                 if self.early_stop
-                    if iter_idx > 1 && sum(abs(lmmse_mu_prev - lmmse_mu) < self.early_stop_min_diff ) == x_num && sum(abs(lmmse_Sigma_prev - lmmse_Sigma) < self.early_stop_min_diff, "all") == x_num*x_num
+                    if iter_id > 1 && sum(abs(lmmse_mu_prev - lmmse_mu) < self.early_stop_min_diff ) == x_num && sum(abs(lmmse_Sigma_prev - lmmse_Sigma) < self.early_stop_min_diff, "all") == x_num*x_num
                         break;
                     end
                     % early stop - store mean and covariance
