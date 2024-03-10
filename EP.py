@@ -110,8 +110,13 @@ class EP(object):
                 
                 # early stop
                 if self.early_stop:
-                    if iter_id>0 and sum(abs(lmmse_mu_prev - lmmse_mu)<self.early_stop_min_diff)==x_num and np.sum(abs(lmmse_Sigma_prev-lmmse_Sigma)<self.early_stop_min_diff,axis=None)==x_num*x_num:
-                        break;
+                    if iter_id > 0:
+                        if self.batch_size == self.BATCH_SIZE_NO:
+                            if np.sum(abs(lmmse_mu_prev - lmmse_mu)< self.early_stop_min_diff, axis=None) == x_num and np.sum(abs(lmmse_Sigma_prev-lmmse_Sigma)<self.early_stop_min_diff, axis=None)==x_num*x_num:
+                                break;
+                        else:
+                            if np.sum(abs(lmmse_mu_prev - lmmse_mu)< self.early_stop_min_diff, axis=None) == self.batch_size*x_num and np.sum(abs(lmmse_Sigma_prev-lmmse_Sigma)<self.early_stop_min_diff, axis=None) == self.batch_size*x_num*x_num:
+                                break;
                     # early stop - store mean and covariance
                     lmmse_mu_prev = lmmse_mu;
                     lmmse_Sigma_prev = lmmse_Sigma;

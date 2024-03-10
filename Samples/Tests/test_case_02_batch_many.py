@@ -29,11 +29,14 @@ SERs_ep_es_mat = matlab_data["SERs_ep_es"];
 sympool = matlab_data["sympool"].squeeze();
 sympool_real = matlab_data["sympool_real"].squeeze();
 sym_bitnum = matlab_data["sym_bitnum"].squeeze();
-nframe = matlab_data["nframe"].squeeze();
+nframe = matlab_data["nframe"];
 x_all = matlab_data["x_all"];
 H_real_all = matlab_data["H_real_all"];
 y_real_all = matlab_data["y_real_all"];
 
+# batch
+# batch_size = multiprocessing.cpu_count()*64;
+batch_size = 10;
 
 # Param Config - Model
 SNR_range = np.arange(8, 17, 2);                            # SNR range
@@ -49,8 +52,8 @@ minvar = 1e-13;
 early_stop_diff = 1e-4;
 
 # Simulation
-ep = EP(sympool_real, beta=(1-ep_beta), epsilon=minvar, early_stop_min_diff=early_stop_diff);
-ep_es = EP(sympool_real, beta=(1-ep_beta), epsilon=minvar, early_stop=True, early_stop_min_diff=early_stop_diff);
+ep = EP(sympool_real, beta=(1-ep_beta), epsilon=minvar, early_stop_min_diff=early_stop_diff, batch_size=batch_size);
+ep_es = EP(sympool_real, beta=(1-ep_beta), epsilon=minvar, early_stop=True, early_stop_min_diff=early_stop_diff, batch_size=batch_size);
 SERs_ep = np.zeros(len(SNR_range));
 SERs_ep_es = np.zeros(len(SNR_range));
 SERs_alva = np.zeros(len(SNR_range));
@@ -60,13 +63,13 @@ for idx in range(len(SNR_range)):
     No = No_range[idx];
     
     # Prepare the space to store all BERs during 'BER_max_try_times' times
-    SERs_ep_tmp = np.zeros(nframe);
-    SERs_ep_es_tmp = np.zeros(nframe);
-    SERs_alva_tmp =np.zeros(nframe);
+    SERs_ep_tmp = np.zeros(int(nframe/batch_size));
+    SERs_ep_es_tmp = np.zeros(int(nframe/batch_size));
+    SERs_alva_tmp = np.zeros(int(nframe/batch_size));
     # Try several times to do average on all BERs to avoid fluctuation
     print("\rSNR=%d: 0%%"%SNR, end="", flush=True);
-    for try_times in range(nframe):
-        print("\rSNR=%d: %.2f%%"%(SNR, try_times/nframe*100), end="", flush=True);
+    for try_times in range(int(nframe/batch_size)):
+        print("\rSNR=%d: %.2f%%"%(SNR, try_times/int(nframe/batch_size)*100), end="", flush=True);
         # # Create symbols
         # x_idx = randint(M, size=(batch_size, tx_num, 1));
         # x = np.take(sympool, x_idx)
@@ -80,27 +83,38 @@ for idx in range(len(SNR_range)):
         # x_real = np.concatenate([real(x), imag(x)], axis=-2);
         # y_real = np.concatenate([real(y), imag(y)], axis=-2);
         # H_real = np.concatenate([np.concatenate([real(H), -imag(H)], axis=-1), np.concatenate([imag(H), real(H)], axis=-1)], axis=-2);
-        y_real = y_real_all[:, :, idx, try_times];
-        H_real = H_real_all[:, :, idx, try_times];
-        x= x_all[:, :, idx, try_times];
+        y_real = y_real_all[:, :, idx, try_times:(try_times+batch_size)];
+        H_real = H_real_all[:, :, idx, try_times:(try_times+batch_size)];
+        x= x_all[:, :, idx, try_times:(try_times+batch_size)];
+        y_real = np.moveaxis(y_real, -1, 0);
+        H_real = np.moveaxis(H_real, -1, 0);
+        x = np.moveaxis(x, -1, 0);
         
         
         # detect
         # EP
         syms = ep.detect(y_real,H_real, No/2, sym_map=True);
-        syms = syms[:int(syms.shape[-1]/2)] + 1j*syms[int(syms.shape[-1]/2):];
+        syms = syms[:, :int(syms.shape[-1]/2)] + 1j*syms[:, int(syms.shape[-1]/2):];
         # EP - early stop
         syms_es = ep_es.detect(y_real,H_real, No/2, sym_map=True);
-        syms_es = syms_es[:int(syms_es.shape[-1]/2)] + 1j*syms_es[int(syms_es.shape[-1]/2):];
-
+        syms_es = syms_es[:, :int(syms_es.shape[-1]/2)] + 1j*syms_es[:, int(syms_es.shape[-1]/2):];
+        # EP - alva
+        # EP detection - Alva's python code
+        syms_ep_alva = EP_Alva(sympool_real.squeeze(), y_real.squeeze(-1).shape[-1], y_real.squeeze(-1), H_real, No/2, 10);
+        syms_ep_alva = ep.symmap(syms_ep_alva);
+        syms_ep_alva = syms_ep_alva[:, :int(syms_ep_alva.shape[-1]/2)] + 1j*syms_ep_alva[:, int(syms_ep_alva.shape[-1]/2):];
+        
         # SER cal
-        SERs_ep_tmp[try_times] = np.sum(x.squeeze(-1) - syms > eps, axis=None)/tx_num;
-        SERs_ep_es_tmp[try_times] = np.sum(x.squeeze(-1) - syms_es > eps, axis=None)/tx_num;
+        SERs_ep_tmp[try_times] = np.sum(x.squeeze(-1) - syms > eps, axis=None)/tx_num/batch_size;
+        SERs_ep_es_tmp[try_times] = np.sum(x.squeeze(-1) - syms_es > eps, axis=None)/tx_num/batch_size;
+        SERs_alva_tmp[try_times] = np.sum(x.squeeze(-1) - syms_ep_alva > eps, axis=None)/tx_num/batch_size;
     print("\rSNR=%d: 100%%"%SNR);
     # mean
     SERs_ep[idx] = mean(SERs_ep_tmp);
     SERs_ep_es[idx] = mean(SERs_ep_es_tmp);
+    SERs_alva[idx] = mean(SERs_alva_tmp);
     
 # calculate diff
 SERs_ep_diff = SERs_ep - SERs_ep_mat;
 SERs_ep_es_diff = SERs_ep_es - SERs_ep_es_mat;
+SERs_alva_diff = SERs_alva - SERs_alva_mat;
