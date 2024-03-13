@@ -35,7 +35,13 @@ EP.py</param.exclude.filters>
     <param.registered.apps />
     <param.docs />
     <param.getting.started.guide />
-    <param.matlabpath.excludes />
+    <param.matlabpath.excludes>
+      <item>/Samples/Tests</item>
+      <item>/Samples/Alva/Utils/__pycache__</item>
+      <item>/Samples/Alva/Utils</item>
+      <item>/Samples/Alva</item>
+      <item>/Samples</item>
+    </param.matlabpath.excludes>
     <param.javaclasspath.excludes />
     <param.exported.on.package>false</param.exported.on.package>
     <param.required.addons />
@@ -71,7 +77,6 @@ EP.py</param.exclude.filters>
       <param.registered.apps />
       <param.docs />
       <param.getting.started.guide />
-      <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
       <param.exported.on.package />
       <param.required.addons />
