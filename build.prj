@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="D:\Data-Projects\Github_Whatshow\Phy_Detect_EP\Phy_Detect_EP.prj" location="D:\Data-Projects\Github_Whatshow\Phy_Detect_EP" name="Phy_Detect_EP" target="target.toolbox" target-name="Package Toolbox">
+  <configuration file="D:\Data-Projects\Github_Whatshow\Phy_Detect_EP\build.prj" location="D:\Data-Projects\Github_Whatshow\Phy_Detect_EP" name="build" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Phy_Detect_EP</param.appname>
     <param.authnamewatermark>Whatshow</param.authnamewatermark>
     <param.email>wfwfpwefe2323@gmail.com</param.email>
