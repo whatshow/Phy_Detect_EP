@@ -9,6 +9,10 @@ path_file = path_folder + "test_case_02.mat";
 if ~exist(path_folder, 'dir')
     mkdir(path_folder);
 end
+% delete the file if exist
+if exist(path_file, 'file')
+    delete(path_file)
+end
 
 %% Param Config - Model
 SNR_range = 8:2:16;                                        % SNR range
@@ -32,9 +36,9 @@ SERs_ep = zeros(1, length(SNR_range));
 SERs_ep_es = zeros(1, length(SNR_range));
 SERs_alva = zeros(1, length(SNR_range));
 
-x_all = zeros(tx_num, 1, length(SNR_range), nframe);
-H_real_all = zeros(rx_num*2, tx_num*2, length(SNR_range), nframe);
-y_real_all = zeros(tx_num*2, 1, length(SNR_range), nframe);
+x_all = zeros(tx_num, 1, nframe, length(SNR_range));
+H_real_all = zeros(rx_num*2, tx_num*2, nframe, length(SNR_range));
+y_real_all = zeros(tx_num*2, 1, nframe, length(SNR_range));
 
 for idx = 1:length(SNR_range)
     % Get current SNR
@@ -66,9 +70,9 @@ for idx = 1:length(SNR_range)
         y_real = [real(y);imag(y)];
         H_real = [real(H), -imag(H); imag(H), real(H)];
         % save
-        x_all(:, :, idx, try_times) = x;
-        H_real_all(:, :, idx, try_times) = H_real;
-        y_real_all(:, :, idx, try_times) = y_real;
+        x_all(:, :, try_times, idx) = x;
+        H_real_all(:, :, try_times, idx) = H_real;
+        y_real_all(:, :, try_times, idx) = y_real;
     end
 end
 

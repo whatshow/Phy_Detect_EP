@@ -30,9 +30,9 @@ SERs_ep = zeros(1, length(SNR_range));
 SERs_ep_es = zeros(1, length(SNR_range));
 SERs_alva = zeros(1, length(SNR_range));
 
-syms_all = zeros(tx_num, 1, length(SNR_range), nframe);
-syms_es_all = zeros(tx_num, 1, length(SNR_range), nframe);
-syms_alva_all = zeros(tx_num, 1, length(SNR_range), nframe);
+syms_all = zeros(tx_num, 1, nframe, length(SNR_range));
+syms_es_all = zeros(tx_num, 1, nframe, length(SNR_range));
+syms_alva_all = zeros(tx_num, 1, nframe, length(SNR_range));
 
 for idx = 1:length(SNR_range)
     % Get current SNR
@@ -47,9 +47,9 @@ for idx = 1:length(SNR_range)
     % Try several times to do average on all BERs to avoid fluctuation
     for try_times = 1:nframe
         % to real
-        y_real = y_real_all(:, :, idx, try_times);
-        H_real = H_real_all(:, :, idx, try_times);
-        x= x_all(:, :, idx, try_times);
+        y_real = y_real_all(:, :, try_times, idx);
+        H_real = H_real_all(:, :, try_times, idx);
+        x= x_all(:, :, try_times, idx);
         
         % EP
         % EP 
@@ -66,9 +66,9 @@ for idx = 1:length(SNR_range)
         syms_alva = ep_alva_symmap.symmap(syms_alva);
 
         % save detection results
-        syms_all(:, :, idx, try_times) = syms;
-        syms_es_all(:, :, idx, try_times) = syms_es;
-        syms_alva_all(:, :, idx, try_times) = syms_alva;
+        syms_all(:, :, try_times, idx) = syms;
+        syms_es_all(:, :, try_times, idx) = syms_es;
+        syms_alva_all(:, :, try_times, idx) = syms_alva;
 
         % SER cal
         SERs_ep_tmp(try_times) = sum(x - syms > eps)/tx_num;
