@@ -46,8 +46,8 @@ All EP codes are uniform in matlab and python as a class of `EP`. This class con
     ```
     ```python
     # python
-    ep = EP(sympool_real, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4); # no batch
-    ep = EP(sympool_real, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4, batch_size=10); # using batch
+    ep = EP(constellation, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4); # no batch
+    ep = EP(constellation, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4, batch_size=10); # using batch
     ```
 * detect<br>
     `@y`: the received signal, a vector of [(batch_size), rx_num], [(batch_size), rx_num, 1] or [(batch_size), 1, rx_num] <br>
