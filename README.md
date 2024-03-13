@@ -10,6 +10,10 @@ Currently, we offer three options to install this tool.
 
     Go to [releases](https://github.com/whatshow/Phy_Detect_EP/releases/) to download the file `Phy_Detect_EP.mltbx` in the latest release to install.<br>
     The class `EP` will be automatically added in Matlab. (Don't forget to restart Matlab after installation).
+* Install through `pip`
+    ```
+    pip install whatshow-phy-detect-ep
+    ```
 * Install through `git` under another local repositiory
     * **In another local repositiory, add this module**
         ```sh
