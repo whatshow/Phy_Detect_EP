@@ -29,6 +29,42 @@ Currently, we offer three options to install this tool.
             ```
 
 ## How to use
+All EP codes are uniform in matlab and python as a class of `EP`. This class contains the whole process. This section will illustrate the methods of this class following the process of detection.
+* EP(the parameter names follow the notations in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617))<br>
+    `@constellation`: the constellation, a vector<br>
+    `@beta`: the percentage for taking values from the previous iteration<br>
+    `@epsilon`: the default minimal variance<br>
+    `@l`: the maximal iteration<br>
+    `@early_stop`: whether stop early<br>
+    `@early_stop_min_diff`: the elemental minimal (element-wise) difference in mean and variance<br>
+    `@batch_size`**(optional)** : the batch size **(only used in python)**.<br>
+    ```matlab
+    % matlab
+    M = 16;
+    sympool = qammod([0: M - 1], M, "UnitAveragePower", true);
+    ep = EP(sympool_real, "beta", 0.1, "epsilon", 1e-13, "early_stop_min_diff", 1e-4);
+    ```
+    ```python
+    # python
+    ep = EP(sympool_real, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4); # no batch
+    ep = EP(sympool_real, beta=0.1, epsilon=1e-13, early_stop_min_diff=1e-4, batch_size=10); # using batch
+    ```
+* detect<br>
+    `@y`: the received signal, a vector of [(batch_size), rx_num], [(batch_size), rx_num, 1] or [(batch_size), 1, rx_num] <br>
+    `@H`: the channel matrix, a matrix of [(batch_size), rx_num, tx_num]<br>
+    `@No`: the noise (linear) power<br>
+    `@sym_map`: false by default. If true, the output will be mapped to the constellation<br>
+    ```matlab
+    # matlab
+    syms = ep.detect(y, H, No); # no hard mapping
+    syms = ep.detect(y, H, No, sym_map=True); # hard mapping
+    ```
+    ```python
+    # python
+    syms = ep.detect(y, H, No); # no hard mapping
+    syms = ep.detect(y, H, No, sym_map=True); # hard mapping
+    ```
+
 ## Samples
 Before running any sample code, please make sure you are at the root path of this repository. Also, Matlab codes require running `init` in the command window first to load directories.
 * `Alva`: this is the original code from `Alva Kosasih`.

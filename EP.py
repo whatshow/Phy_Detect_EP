@@ -26,6 +26,7 @@ class EP(object):
     @l:                         maximal iteration
     @early_stop:                whether stop early
     @early_stop_min_diff:       the elemental minimal difference in mean and variance
+    @batch_size:                the batch size
     '''
     def __init__(self, constellation, *, beta=None, epsilon=None, l=None, early_stop=None, early_stop_min_diff=None, batch_size=None):
         # inputs
@@ -52,7 +53,6 @@ class EP(object):
             self.batch_size = batch_size;
         
     '''
-    detect
     detect
     @y:           the received signal
     @H:           the channel matrix
