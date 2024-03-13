@@ -41,8 +41,8 @@ All EP codes are uniform in matlab and python as a class of `EP`. This class con
     ```matlab
     % matlab
     M = 16;
-    sympool = qammod([0: M - 1], M, "UnitAveragePower", true);
-    ep = EP(sympool, "beta", 0.1, "epsilon", 1e-13, "early_stop_min_diff", 1e-4);
+    constellation = qammod([0: M - 1], M, "UnitAveragePower", true);
+    ep = EP(constellation, "beta", 0.1, "epsilon", 1e-13, "early_stop_min_diff", 1e-4);
     ```
     ```python
     # python
