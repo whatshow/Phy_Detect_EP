@@ -19,7 +19,6 @@ Currently, we offer three options to install this tool.
         from whatshow_phy_detect_ep import EP
         ```
 * Install through `git` under another local repositiory
-    **In another local repositiory, add this module**
     ```sh
     git submodule add git@github.com:whatshow/Phy_Detect_EP.git Modules/Phy_Detect_EP
     ```
