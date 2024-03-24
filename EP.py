@@ -37,7 +37,7 @@ class EP(object):
             self.constellation = constellation;
             self.constellation_len = len(constellation);
         # inputs - constellation average power
-        self.es = np.sum(self.constellation**2)/self.constellation_len;
+        self.es = np.sum(abs(self.constellation)**2)/self.constellation_len;
         # optional iputs
         if beta is not None:
             self.beta = np.asarray(beta).squeeze();

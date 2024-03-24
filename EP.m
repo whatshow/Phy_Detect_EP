@@ -30,7 +30,7 @@ classdef EP < handle
                 self.constellation_len = length(constellation);
             end
             % inputs - constellation average power
-            self.es = sum(self.constellation.^2)/self.constellation_len;
+            self.es = sum(abs(self.constellation).^2)/self.constellation_len;
             % optional inputs - register 
             inPar = inputParser;
             addParameter(inPar,"beta", self.beta, @(x) isscalar(x)&isnumeric(x));

@@ -4,8 +4,8 @@
     <param.authnamewatermark>whatshow</param.authnamewatermark>
     <param.email>wfwfpwefe2323@gmail.com</param.email>
     <param.company />
-    <param.summary />
-    <param.description>This detection method is proposed in Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems by Javier Céspedes. It has three process: cavity distribution, Bayesian estimation and iterative update.</param.description>
+    <param.summary>This detection method is proposed in Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems by Javier Céspedes.</param.summary>
+    <param.description />
     <param.screenshot />
     <param.version>1.0.5</param.version>
     <param.output>${PROJECT_ROOT}\whatshow_phy_detect_ep.mltbx</param.output>
@@ -62,7 +62,7 @@ init.m
     <param.additional.sw.linux.url />
     <unset>
       <param.company />
-      <param.summary />
+      <param.description />
       <param.screenshot />
       <param.output />
       <param.products.name />
