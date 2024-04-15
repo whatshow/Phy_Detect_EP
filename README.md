@@ -1,8 +1,9 @@
 # Expectation Propagation Detection
-This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update.
-> Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. IEEE Transactions on Communications, 62(8), 2840-2849.
+This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update. Also, the initial version of this code is from `Alva Kosasih`.
+> Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. *IEEE Transactions on Communications, 62(8)*, 2840-2849.
 
-Also, the initial version of this code is from `Alva Kosasih`.
+The graph neural network aided version is also included as in [Graph Neural Network Aided Expectation Propagation Detector for MU-MIMO Systems](https://ieeexplore.ieee.org/abstract/document/9771869/). In this detector, a GNN is implemented after cavity distribution to calculate the probability of all possible x values. Then, the estimation is able to update the new mean and variance similar to the Bayesian estimation.
+> Kosasih, A., Onasis, V., Hardjawana, W., Miloslavskaya, V., Andrean, V., Leu, J. S., & Vucetic, B. (2022, April). Graph neural network aided expectation propagation detector for MU-MIMO systems. In *2022 IEEE Wireless Communications and Networking Conference (WCNC)* (pp. 1212-1217). IEEE.
 
 ## How to install
 Currently, we offer three options to install this tool.
