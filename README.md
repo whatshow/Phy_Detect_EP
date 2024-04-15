@@ -1,4 +1,4 @@
-# Phy_Detect_EP
+# Expectation Propagation Detection
 This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update.
 > Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. IEEE Transactions on Communications, 62(8), 2840-2849.
 
