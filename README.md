@@ -2,7 +2,9 @@
 This detection method is proposed in [Expectation Propagation Detection for High-Order High-Dimensional MIMO Systems](https://ieeexplore.ieee.org/document/6841617) by **Javier Céspedes**. It has three process: cavity distribution, Bayesian estimation and iterative update. Also, the initial version of this code is from `Alva Kosasih`.
 > Cespedes, J., Olmos, P. M., Sánchez-Fernández, M., & Perez-Cruz, F. (2014). Expectation propagation detection for high-order high-dimensional MIMO systems. *IEEE Transactions on Communications, 62(8)*, 2840-2849.
 
-The graph neural network aided version is also included as in [Graph Neural Network Aided Expectation Propagation Detector for MU-MIMO Systems](https://ieeexplore.ieee.org/abstract/document/9771869/). In this detector, a GNN is implemented after cavity distribution to calculate the probability of all possible x values. Then, the estimation is able to update the new mean and variance similar to the Bayesian estimation.
+The graph neural network aided version is also included as in [Graph Neural Network Aided MU-MIMO Detectors](https://ieeexplore.ieee.org/document/9832663) and [Graph Neural Network Aided Expectation Propagation Detector for MU-MIMO Systems](https://ieeexplore.ieee.org/abstract/document/9771869/). In this detector, a GNN is implemented after cavity distribution to calculate the probability of all possible x values. Then, the estimation is able to update the new mean and variance similar to the Bayesian estimation.
+> A. Kosasih, V. Onasis, V. Miloslavskaya, W. Hardjawana, V. Andrean and B. Vucetic, "Graph Neural Network Aided MU-MIMO Detectors," in *IEEE Journal on Selected Areas in Communications*, vol. 40, no. 9, pp. 2540-2555, Sept. 2022, doi: 10.1109/JSAC.2022.3191344.
+
 > Kosasih, A., Onasis, V., Hardjawana, W., Miloslavskaya, V., Andrean, V., Leu, J. S., & Vucetic, B. (2022, April). Graph neural network aided expectation propagation detector for MU-MIMO systems. In *2022 IEEE Wireless Communications and Networking Conference (WCNC)* (pp. 1212-1217). IEEE.
 
 ## How to install
